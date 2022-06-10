@@ -4,62 +4,39 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum PlayerState
+    public float speed;
+    public KeyCode upCode;
+    public KeyCode downCode;
+    public float mapWidth;
+
+    private float moveInput;
+    private Rigidbody2D rb;
+
+    private void Awake()
     {
-        Player1,
-        Player2
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    public PlayerState currentState;
-    public float speed;
-
-    private Vector2 MovementUp;
-    private Vector2 MovementDown;
-
-    private void Update()
+    private void FixedUpdate()
     {
         Movement();
-
-        switch(currentState)
-        {
-            case PlayerState.Player1:
-                Player1();
-                break;
-            case PlayerState.Player2:
-                Player2();
-                break;
-        }
     }
 
     void Movement()
     {
-        MovementUp = Vector2.up * speed * Time.deltaTime;
-        MovementDown = Vector2.down * speed * Time.deltaTime;
-    }
-
-    void Player1()
-    {
-        if (Input.GetKey(KeyCode.W))
+        if(Input.GetKey(upCode))
         {
-            transform.Translate(MovementUp);
-        } 
-
-        else if(Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(MovementDown);
+            moveInput = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
+            Vector2 newPosition = rb.position + Vector2.up * moveInput;
+            newPosition.y = Mathf.Clamp(newPosition.y, -mapWidth, mapWidth);
+            rb.MovePosition(newPosition);
+            
+        } else if(Input.GetKey(downCode)) {
+            moveInput = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
+            Vector2 newPosition = rb.position + Vector2.up * moveInput;
+            newPosition.y = Mathf.Clamp(newPosition.y, -mapWidth, mapWidth);
+            rb.MovePosition(newPosition);
         }
-    }
-
-    void Player2()
-    {
-        if(Input.GetKey(KeyCode.UpArrow))
-        {
-            transform.Translate(MovementUp);
-        }
-
-        else if(Input.GetKey(KeyCode.DownArrow))
-        {
-            transform.Translate(MovementDown);
-        }
+        
     }
 }

@@ -9,6 +9,8 @@ TagManager:
   - Player2
   - Limiter
   - ball
+  - Limiter P1
+  - Limiter P2
   layers:
   - Default
   - TransparentFX
