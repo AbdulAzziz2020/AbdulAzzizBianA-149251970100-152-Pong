@@ -6,49 +6,83 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    [Header("Score Controller")]
+    public int setWinningScore = 9;
+    
+    [Header("Panel Controller")]
+    public TMP_Text winnerText;
+    public GameObject startPanel;
+    public GameObject finishPanel;
+
+    [Header("Player 1 Controller")]
     public TMP_Text scorePlayer1Text;
+    public TMP_Text player1MatchPoint;
+
+    [Header("Player 2 Controller")]
     public TMP_Text scorePlayer2Text;
+    public TMP_Text player2MatchPoint;
 
     public static int scorePlayer1 = 0;
     public static int scorePlayer2 = 0;
-
-    public TMP_Text winnerText;
-    public GameObject finishPanel;
-
-    private int maxScore = 9;
+    public static bool isGameEnded = true;
 
     private void Start()
     {
-        finishPanel.SetActive(false);
         scorePlayer1Text.text = scorePlayer1.ToString();
         scorePlayer2Text.text = scorePlayer2.ToString();
+        setWinningScore = PlayerPrefs.GetInt("MaxScore");
     }
 
     private void Update()
     {
-        ScorePlayer1();
-        ScorePlayer2();
+        StartCoroutine(ScorePlayer1());
+        StartCoroutine(ScorePlayer2());
     }
 
-    void ScorePlayer1()
+    IEnumerator ScorePlayer1()
     {
         scorePlayer1Text.text = scorePlayer1.ToString();
-        if (scorePlayer1 > maxScore)
+        if(scorePlayer1 == setWinningScore - 1)
         {
-            Time.timeScale = 0;
+            player1MatchPoint.gameObject.SetActive(true);
+        }
+
+        if (scorePlayer1 == setWinningScore)
+        {
+            isGameEnded = true;
+
+            yield return new WaitForSeconds(2f);
+
             finishPanel.SetActive(true);
-            winnerText.text = "Winner Player 1";
+            winnerText.text = "Player 1 Won!";
         }
     }
 
-    void ScorePlayer2()
+    IEnumerator ScorePlayer2()
     {
         scorePlayer2Text.text = scorePlayer2.ToString();
-        if (scorePlayer2 > maxScore)
+        if (scorePlayer2 == setWinningScore - 1)
         {
-            Time.timeScale = 0;
+            player2MatchPoint.gameObject.SetActive(true);
+        }
+
+        if (scorePlayer2 == setWinningScore)
+        {
+            isGameEnded = true;
+
+            yield return new WaitForSeconds(2f);
+
             finishPanel.SetActive(true);
             winnerText.text = "Winner Player 2";
         }
+    }
+
+    public void PlayGame()
+    {
+        isGameEnded = false;
+        startPanel.SetActive(false);
+
+        GameObject ball = GameObject.FindGameObjectWithTag("ball");
+        ball.GetComponent<BallController>().Start();
     }
 }

@@ -4,13 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - BallSpawner
   - Player1
   - Player2
   - Limiter
   - ball
   - Limiter P1
   - Limiter P2
+  - Obstacles
+  - Power Up
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Area Spawn
   - 
   - 
   - 
