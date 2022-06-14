@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScaleDown : MonoBehaviour
 {
-    public int multiplier = 3;
+    public int multiplier = 2;
     public int speed = 5;
 
     private void OnTriggerEnter2D(Collider2D collision)

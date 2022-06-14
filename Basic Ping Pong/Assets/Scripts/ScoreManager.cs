@@ -54,7 +54,7 @@ public class ScoreManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
 
             finishPanel.SetActive(true);
-            winnerText.text = "Player 1 Won!";
+            winnerText.text = "Player 1, Won!";
         }
     }
 
@@ -73,7 +73,7 @@ public class ScoreManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
 
             finishPanel.SetActive(true);
-            winnerText.text = "Winner Player 2";
+            winnerText.text = "Player 2, Won";
         }
     }
 
